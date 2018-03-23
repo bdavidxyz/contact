@@ -1,0 +1,7 @@
+%nav.navigation{role:'navigation'}
+  %div{style: 'margin-bottom: 1rem; padding-right: 0.6rem;'}
+    %br
+    = link_to 'Se déconnecter', signout_path unless Rails.env.development?
+  - Administrate::Namespace.new(namespace).resources.each do |resource|
+    - next if resource.resource == 'pages'
+    = link_to(display_resource_name(resource),[namespace, resource.path], class: "navigation__link navigation__link--#{nav_link_state(resource)}")

@@ -1,0 +1,6 @@
+Vous pouvez charger les données CSV ici
+
+<%= form_with url: admin_load_csv_path, id: 'admin_load_csv_path' do |form| %>
+  valeur initiale <%= form.text_area :csv_text %>
+  <%= form.submit 'Tout charger'%>
+<% end %>
