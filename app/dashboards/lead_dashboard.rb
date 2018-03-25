@@ -12,6 +12,7 @@ class LeadDashboard < Administrate::BaseDashboard
     id: Field::Number,
     first_name: Field::String,
     last_name: Field::String,
+    biz: Field::String,
     email: Field::String,
     position: Field::String,
     company: Field::String,
@@ -27,10 +28,10 @@ class LeadDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :id,
-    :first_name,
-    :last_name,
+    :biz,
     :email,
-    :tags,
+    :position,
+    :connected_on,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES

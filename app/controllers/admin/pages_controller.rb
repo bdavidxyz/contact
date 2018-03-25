@@ -14,31 +14,33 @@ module Admin
       p ''
 
       csv = CSV.parse(csv_text, :headers => true, col_sep: ';')
-      csv.each do |row|
-        p '- - - - - - - - - - - - - - row- - - - - - - - - - - - - - - -' 
-        p row.to_h.inspect
-        p ''
+      csv.each_with_index do |row, index|
+        begin
+          first_name = row["First Name"]
+          last_name = row["Last Name"]
+          connect_date_str = row["Connected On"].split("/").insert(2, "20").join("-").gsub(/(.*)-/, '\1')
+          # connect_date_str = row["Connected On"].split(', ')[0].insert(-3, '20').gsub("/", "-")
+          biz = row["First Name"].parameterize + "-" + row["Last Name"].parameterize
+          connected_on = Date.strptime(connect_date_str, "%m-%d-%Y, %I:%M %p")
+          position = row["Position"]
+          email = row["Email Address"]
+          company = row["Company"]
 
-        first_name = row["First Name"]
-        last_name = row["Last Name"]
-        connected_on = Date.strptime(row["Connected On"].split(', ')[0].insert(-3, '20').gsub("/", "-"), '%m-%d-%Y')
-        position = row["Position"]
-        email = row["Email Address"]
-        company = row["Company"]
+          the_lead = Lead.new(
+              first_name: first_name,
+              last_name: last_name,
+              biz: biz,
+              connected_on: connected_on,
+              position: position,
+              email: email,
+              company: company,
+          )
 
-        the_lead = Lead.new(
-            first_name: first_name,
-            last_name: last_name,
-            connected_on: connected_on,
-            position: position,
-            email: email,
-            company: company,
-        )
-      
-        p '- - - - - - - - - - - - - - the_lead- - - - - - - - - - - - - - - -' 
-        p the_lead.inspect
-        p ''
-        the_lead.save
+          Lead.where(email: email).first_or_create(the_lead.attributes)
+
+        rescue
+          p "row #{index} failed"
+        end
       end
  
 
