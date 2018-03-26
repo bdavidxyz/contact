@@ -31,7 +31,7 @@ class LeadDashboard < Administrate::BaseDashboard
     :biz,
     :email,
     :position,
-    :connected_on,
+    :tags,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -43,6 +43,7 @@ class LeadDashboard < Administrate::BaseDashboard
     :last_name,
     :email,
     :position,
+    :biz,
     :company,
     :connected_on,
     :created_at,
